@@ -1,0 +1,52 @@
+{
+  "proyectos": [
+    {
+      "id": 1,
+      "nombre": "Red de Huertos Urbanos Comunitarios",
+      "organizacion": "Ecobarrios Unidos",
+      "descripcion": "Iniciativa que conecta huertos urbanos para promover la agricultura ecológica en la ciudad y fortalecer las redes vecinales.",
+      "area": "Medio Ambiente",
+      "contacto": "info@ecobarriosunidos.org"
+    },
+    {
+      "id": 2,
+      "nombre": "Proyecto de Inclusión Digital para Mayores",
+      "organizacion": "Tecnología Solidaria",
+      "descripcion": "Formación en competencias digitales para personas mayores, facilitando su acceso a servicios online y comunicación con familiares.",
+      "area": "Educación",
+      "contacto": "mayores@tecsolidaria.es"
+    },
+    {
+      "id": 3,
+      "nombre": "Centro de Apoyo a Refugiados",
+      "organizacion": "Acogida Sin Fronteras",
+      "descripcion": "Servicio integral de acogida, asesoramiento legal y acompañamiento para personas refugiadas y solicitantes de asilo.",
+      "area": "Cooperación",
+      "contacto": "refugio@acogidasf.org"
+    },
+    {
+      "id": 4,
+      "nombre": "Banco de Tiempo Local",
+      "organizacion": "Tiempo Compartido",
+      "descripcion": "Plataforma de intercambio de servicios basada en el tiempo como unidad de valor, fomentando la economía solidaria.",
+      "area": "Desarrollo Comunitario",
+      "contacto": "contacto@tiempocompartido.net"
+    },
+    {
+      "id": 5,
+      "nombre": "Programa de Acompañamiento a la Discapacidad",
+      "organizacion": "Capacidades Diversas",
+      "descripcion": "Servicios de apoyo personalizado para personas con discapacidad y sus familias, promoviendo la autonomía personal.",
+      "area": "Acción Social",
+      "contacto": "apoyo@capacidadesdiversas.org"
+    },
+    {
+      "id": 6,
+      "nombre": "Comedor Social y Distribución de Alimentos",
+      "organizacion": "Alimentos Para Todos",
+      "descripcion": "Servicio diario de comedor social y distribución de alimentos a personas en situación de vulnerabilidad.",
+      "area": "Acción Social",
+      "contacto": "comedor@alimentosparatodos.es"
+    }
+  ]
+}
