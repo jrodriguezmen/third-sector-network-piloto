@@ -1,0 +1,17 @@
+{
+  "name": "3sn-marco-logico",
+  "version": "0.1.0",
+  "private": true,
+  "description": "3SN · Generador de Matriz de Marco Lógico con IA para ONG",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.js"
+  },
+  "dependencies": {
+    "docx": "9.5.1",
+    "stripe": "18.5.0"
+  }
+}

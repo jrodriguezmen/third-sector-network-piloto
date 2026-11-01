@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tu matriz de Marco Lógico · 3SN</title>
+  <meta name="robots" content="noindex">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <header class="hero hero-small">
+    <div class="container">
+      <p class="brand"><a href="/">3SN · Third Sector Network</a></p>
+      <h1>¡Gracias! Tu matriz completa</h1>
+      <p class="lead">Recibirás la factura por email. Puedes generar hasta 3 versiones de este proyecto.</p>
+    </div>
+  </header>
+  <main class="container card">
+    <div id="status" aria-live="polite"><p class="loading">Preparando tu matriz completa… Tarda entre 30 y 60 segundos. No cierres esta página.</p></div>
+    <div class="actions hidden" id="actions">
+      <button class="btn btn-primary" id="download-btn">Descargar en Word (.docx)</button>
+      <button class="btn" id="regen-btn">Generar otra versión</button>
+      <span class="small" id="remaining"></span>
+    </div>
+    <div id="result"></div>
+    <p class="error" id="error" role="alert"></p>
+  </main>
+  <footer class="container footer"><p>¿Algún problema? Escríbenos y lo resolvemos. Guarda esta página: el enlace sirve para volver a descargar.</p></footer>
+  <script src="assets/render.js"></script>
+  <script src="assets/gracias.js"></script>
+</body>
+</html>

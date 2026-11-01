@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "api/preview.js": { "maxDuration": 60 },
+    "api/generate.js": { "maxDuration": 120 },
+    "api/checkout.js": { "maxDuration": 15 }
+  }
+}
