@@ -110,3 +110,21 @@ test('generateMatrix pasa a tool_choice auto si el modelo no admite forzar la he
   await generateMatrix(cleanForm(FORM), 'full', { fetchImpl });
   assert.deepEqual(calls, ['tool', 'auto', 'auto'], 'recuerda que ese modelo solo admite auto');
 });
+
+test('parseMatrix tolera claves en camelCase, niveles como texto, envoltorios y JSON dentro de texto', () => {
+  const raw = {
+    matriz: JSON.stringify({
+      tituloProyecto: 'Proyecto X',
+      objetivoGeneral: 'Contribuir a la inclusión',
+      'Objetivo específico': { enunciado: 'Mejorada la empleabilidad', IOV: ['70 %'], fuentesDeVerificacion: ['Encuesta'], hipotesis: ['Estabilidad'] },
+      resultados: [{ codigo: 'R1', resultado: 'Adquiridas competencias', iov: ['80 %'], fuentes: ['Actas'], supuestos: ['Asistencia'], actividades: [{ codigo: 'A1.1', nombre: 'Talleres', recursos: 'Aula' }] }],
+    }),
+  };
+  const m = parseMatrix(raw, 'preview');
+  assert.equal(m.titulo, 'Proyecto X');
+  assert.equal(m.objetivo_general.descripcion, 'Contribuir a la inclusión');
+  assert.equal(m.objetivo_especifico.descripcion, 'Mejorada la empleabilidad');
+  assert.deepEqual(m.objetivo_especifico.indicadores, ['70 %']);
+  assert.equal(m.resultados[0].descripcion, 'Adquiridas competencias');
+  assert.equal(m.resultados[0].actividades[0].descripcion, 'Talleres');
+});
