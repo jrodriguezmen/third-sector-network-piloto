@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi panel · 3SN</title>
+  <meta name="robots" content="noindex">
+  <link rel="stylesheet" href="/assets/style.css">
+  <link rel="stylesheet" href="/assets/portal/portal.css">
+</head>
+<body>
+  <nav class="topnav"><div class="container">
+    <a class="logo" href="/portal/">3SN</a>
+    <a href="/portal/">Proyectos</a>
+    <a href="/">Marco Lógico</a>
+    <a href="/portal/verificar.html">Verificar</a>
+    <button class="linkbtn" id="logout" type="button">Salir</button>
+  </div></nav>
+  <main class="container">
+    <p class="error" id="error" role="alert"></p>
+    <div id="app"><p class="loading">Cargando tu panel…</p></div>
+  </main>
+  <footer class="container footer"><p>© 3SN · Third Sector Network</p></footer>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+  <script src="/assets/portal/common.js"></script>
+  <script src="/assets/portal/panel.js"></script>
+</body>
+</html>

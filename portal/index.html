@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal de proyectos · 3SN</title>
+  <meta name="description" content="Proyectos sociales con líneas financiables por hitos, contrapartidas para empresas y contratos registrados en blockchain.">
+  <link rel="stylesheet" href="/assets/style.css">
+  <link rel="stylesheet" href="/assets/portal/portal.css">
+</head>
+<body>
+  <nav class="topnav"><div class="container">
+    <a class="logo" href="/portal/">3SN</a>
+    <a href="/portal/">Proyectos</a>
+    <a href="/">Marco Lógico</a>
+    <a href="/portal/verificar.html">Verificar</a>
+    <span id="nav-session"></span>
+  </div></nav>
+
+  <header class="hero hero-small">
+    <div class="container">
+      <p class="brand">3SN · Third Sector Network</p>
+      <h1>Financia proyectos sociales con resultados verificables</h1>
+      <p class="lead">Las ONG publican líneas de sus proyectos con hitos y contrapartidas. Las empresas eligen qué financiar, el dinero se libera por hitos validados y cada contrato y entrega queda registrado en blockchain.</p>
+      <a class="btn btn-primary" href="/portal/entrar.html">Publicar o financiar</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="filters card">
+      <input id="f-texto" type="search" placeholder="Buscar por título, ONG o lugar" aria-label="Buscar">
+      <select id="f-ods" aria-label="Filtrar por ODS"><option value="">Todos los ODS</option></select>
+      <label class="check"><input type="checkbox" id="f-abiertas" checked> Solo con líneas abiertas</label>
+    </section>
+    <p class="error" id="error" role="alert"></p>
+    <section id="lista" class="project-grid" aria-live="polite"><p class="loading">Cargando proyectos…</p></section>
+  </main>
+
+  <footer class="container footer"><p>© 3SN · Third Sector Network</p></footer>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+  <script src="/assets/portal/common.js"></script>
+  <script>
+  (async function () {
+    const { esc, eur, estado, ODS } = window.P3;
+    const lista = document.getElementById('lista');
+    const sel = document.getElementById('f-ods');
+    sel.innerHTML += Object.entries(ODS).map(([n, t]) => `<option value="${n}">ODS ${n} · ${esc(t)}</option>`).join('');
+    let proyectos = [];
+    try {
+      const sb = await P3.client();
+      const { data, error } = await sb.from('proyectos')
+        .select('id,titulo,resumen,ubicacion,ods,creado,perfiles(nombre),lineas(id,titulo,importe,estado)')
+        .eq('estado', 'publicado').order('creado', { ascending: false });
+      if (error) throw error;
+      proyectos = data;
+    } catch (err) {
+      lista.innerHTML = '';
+      document.getElementById('error').textContent = err.message;
+      return;
+    }
+    function render() {
+      const t = document.getElementById('f-texto').value.trim().toLowerCase();
+      const ods = Number(sel.value);
+      const soloAbiertas = document.getElementById('f-abiertas').checked;
+      const vis = proyectos.filter((p) => {
+        const texto = `${p.titulo} ${p.resumen} ${p.ubicacion || ''} ${p.perfiles?.nombre || ''}`.toLowerCase();
+        if (t && !texto.includes(t)) return false;
+        if (ods && !(p.ods || []).includes(ods)) return false;
+        if (soloAbiertas && !p.lineas.some((l) => l.estado === 'abierta')) return false;
+        return true;
+      });
+      if (!vis.length) { lista.innerHTML = '<p class="muted">No hay proyectos que coincidan con la búsqueda.</p>'; return; }
+      lista.innerHTML = vis.map((p) => {
+        const abiertas = p.lineas.filter((l) => l.estado === 'abierta');
+        const importe = abiertas.reduce((s, l) => s + Number(l.importe), 0);
+        return `<a class="project-card" href="/portal/proyecto.html?id=${esc(p.id)}">
+          <p class="small">${esc(p.perfiles?.nombre || 'ONG')}${p.ubicacion ? ` · ${esc(p.ubicacion)}` : ''}</p>
+          <h3>${esc(p.titulo)}</h3>
+          <p>${esc(p.resumen.length > 180 ? `${p.resumen.slice(0, 180)}…` : p.resumen)}</p>
+          <div class="tags">${(p.ods || []).map((n) => `<span class="tag">ODS ${n}</span>`).join('')}</div>
+          <p class="card-foot"><strong>${abiertas.length}</strong> ${abiertas.length === 1 ? 'línea abierta' : 'líneas abiertas'} · <strong>${eur(importe)}</strong> por financiar</p>
+        </a>`;
+      }).join('');
+    }
+    ['f-texto', 'f-ods', 'f-abiertas'].forEach((id) => document.getElementById(id).addEventListener('input', render));
+    render();
+  })();
+  </script>
+</body>
+</html>

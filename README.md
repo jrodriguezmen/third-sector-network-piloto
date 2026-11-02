@@ -66,3 +66,32 @@ npm test
 ```
 
 Para probar en local con el entorno de Vercel: `npx vercel dev` (necesita las variables en `.env`).
+
+---
+
+# Portal de proyectos y financiación (`/portal/`)
+
+Las ONG publican **proyectos** con **líneas financiables**, cada una con **hitos** (entregable + porcentaje) y **contrapartidas** para quien financia (vídeos, difusión, voluntariado…). Las empresas eligen una línea y se comprometen; la ONG acepta y se genera un **convenio** (plantilla tipo convenio de colaboración, Ley 49/2002) que firman ambas partes. Después, la ONG registra la **entrega** de cada hito y el financiador la **valida**: así se libera cada tramo y se devenga la **comisión de 3SN**, que solo cobra cuando se valida la contrapartida.
+
+**Registro en blockchain:** la huella SHA-256 del convenio, de la firma de ambas partes, de cada entrega y de cada validación se ancla en Bitcoin mediante **OpenTimestamps** (gratis, sin cartera ni criptomonedas). Cualquiera puede comprobarla en `/portal/verificar.html` y descargar la prueba `.ots` para verificarla en opentimestamps.org.
+
+**Fase actual (MVP sin dinero real):** los pagos se hacen fuera de la plataforma según los hitos validados. Preparado para la siguiente fase: depósito por hitos con un proveedor de pagos autorizado (Mangopay, Lemonway o Stripe Connect) y, opcionalmente, pagos con stablecoin (EURC) mediante contrato inteligente (requiere revisar MiCA). El punto de conexión está en `validar()` de `lib/portal/service.js`.
+
+## Puesta en marcha del portal
+
+1. Crea un proyecto gratuito en **supabase.com** (región Europa).
+2. En **SQL Editor → New query**, pega el contenido de `supabase/schema.sql` y pulsa **Run**. Crea las tablas, las reglas de seguridad y el almacenamiento privado de entregas.
+3. En **Authentication → URL Configuration**, pon como *Site URL* la dirección de tu web (p. ej. `https://third-sector-network-piloto.vercel.app`) y añade `https://…/portal/panel.html` en *Redirect URLs*.
+4. En **Project Settings → API** copia la URL, la clave `anon` y la clave `service_role`.
+5. En Vercel añade `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY` y, si quieres, `COMISION_PCT`. Vuelve a desplegar.
+6. Entra en `/portal/entrar.html` con dos emails (uno como ONG y otro como empresa) y prueba el flujo completo.
+
+## Seguridad
+
+- Reglas RLS: el público solo ve proyectos publicados; cada ONG solo edita lo suyo; los compromisos y convenios solo los ven las dos partes; los cambios de estado (aceptar, firmar, entregar, validar) solo los hace el servidor.
+- Las entregas se guardan en un bucket privado; el financiador accede con enlaces temporales de 10 minutos.
+- `test/sql/rls_test.sql` comprueba estas reglas sobre PostgreSQL (16 comprobaciones).
+
+## Aviso
+
+La plantilla de convenio es orientativa. Antes de mover dinero real, revisa con un abogado el convenio, la posible regulación de servicios de pago y la política de privacidad.
