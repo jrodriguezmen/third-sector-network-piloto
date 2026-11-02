@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verificar en blockchain · 3SN</title>
+  <link rel="stylesheet" href="/assets/style.css">
+  <link rel="stylesheet" href="/assets/portal/portal.css">
+</head>
+<body>
+  <nav class="topnav"><div class="container">
+    <a class="logo" href="/portal/">3SN</a>
+    <a href="/portal/">Proyectos</a>
+    <a href="/">Marco Lógico</a>
+    <a href="/portal/verificar.html">Verificar</a>
+    <span id="nav-session"></span>
+  </div></nav>
+  <main class="container narrow">
+    <section class="card">
+      <h1>Verificar un contrato o una entrega</h1>
+      <p>Cada convenio, firma, entrega y validación de 3SN deja su huella digital (SHA-256) registrada en la blockchain de Bitcoin mediante <a href="https://opentimestamps.org" rel="noopener" target="_blank">OpenTimestamps</a>. Comprueba aquí que un documento no ha cambiado.</p>
+      <form id="form-hash" novalidate>
+        <label>Huella (64 caracteres)<input name="hash" maxlength="64" autocomplete="off" placeholder="p. ej. 9f86d081884c7d65…"></label>
+        <p class="small">…o elige el archivo y calculamos su huella en tu navegador (no se sube a ningún sitio):</p>
+        <input type="file" id="file" aria-label="Archivo a verificar">
+        <button class="btn btn-primary" type="submit">Verificar</button>
+      </form>
+      <p class="error" id="msg" role="alert"></p>
+      <div id="out" aria-live="polite"></div>
+    </section>
+  </main>
+  <script src="/assets/portal/common.js"></script>
+  <script>
+  (function () {
+    const { esc } = window.P3;
+    const form = document.getElementById('form-hash');
+    const msg = document.getElementById('msg');
+    const out = document.getElementById('out');
+    const TIPOS = { contrato: 'Convenio emitido', contrato_firmado: 'Convenio firmado por ambas partes', entrega: 'Entrega de un hito', validacion: 'Validación de una entrega' };
+    document.getElementById('file').addEventListener('change', async (e) => {
+      const f = e.target.files[0];
+      if (!f) return;
+      const buf = await f.arrayBuffer();
+      const digest = await crypto.subtle.digest('SHA-256', buf);
+      form.hash.value = [...new Uint8Array(digest)].map((b) => b.toString(16).padStart(2, '0')).join('');
+    });
+    const inicial = P3.qs('hash');
+    if (inicial) { form.hash.value = inicial; verificar(); }
+    form.addEventListener('submit', (e) => { e.preventDefault(); verificar(); });
+    async function verificar() {
+      msg.textContent = ''; out.innerHTML = '';
+      const hash = form.hash.value.trim().toLowerCase();
+      try {
+        const res = await fetch(`/api/portal/verificar?hash=${encodeURIComponent(hash)}`);
+        const json = await res.json();
+        if (!res.ok) throw new Error(json.error || 'Error');
+        if (!json.registros.length) { out.innerHTML = '<p class="warn">❌ Esta huella no está registrada en 3SN. Si es un documento de la plataforma, ha sido modificado.</p>'; return; }
+        out.innerHTML = `<p class="ok">✅ Huella registrada: el documento no ha cambiado desde su registro.</p>
+          <ul class="registros">${json.registros.map((r) => `<li><strong>${esc(TIPOS[r.tipo] || r.tipo)}</strong> · ${new Date(r.creado).toLocaleString('es-ES')}<br>
+          <span class="small">Red: ${esc(r.red)} · Estado: ${r.estado === 'pendiente' ? 'enviado, a la espera de confirmación en Bitcoin (unas horas)' : esc(r.estado)}</span></li>`).join('')}</ul>
+          ${json.registros.some((r) => r.prueba) ? `<p><a class="btn" href="/api/portal/ots?hash=${esc(json.hash)}">Descargar prueba .ots</a> <span class="small">Súbela junto al documento original en opentimestamps.org para verificarlo de forma independiente.</span></p>` : ''}`;
+      } catch (err) { P3.flash(msg, err.message); }
+    }
+  })();
+  </script>
+</body>
+</html>

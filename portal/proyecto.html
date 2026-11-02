@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proyecto · 3SN</title>
+  <link rel="stylesheet" href="/assets/style.css">
+  <link rel="stylesheet" href="/assets/portal/portal.css">
+</head>
+<body>
+  <nav class="topnav"><div class="container">
+    <a class="logo" href="/portal/">3SN</a>
+    <a href="/portal/">Proyectos</a>
+    <a href="/">Marco Lógico</a>
+    <a href="/portal/verificar.html">Verificar</a>
+    <span id="nav-session"></span>
+  </div></nav>
+  <main class="container">
+    <p class="error" id="error" role="alert"></p>
+    <div id="proyecto"><p class="loading">Cargando proyecto…</p></div>
+  </main>
+  <footer class="container footer"><p>© 3SN · Third Sector Network</p></footer>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+  <script src="/assets/portal/common.js"></script>
+  <script>
+  (async function () {
+    const { esc, eur, estado, ODS } = window.P3;
+    const box = document.getElementById('proyecto');
+    const errEl = document.getElementById('error');
+    const id = P3.qs('id');
+    let sb; let perfil = null; let session = null;
+    try {
+      sb = await P3.client();
+      session = await P3.session();
+      if (session) {
+        const { data } = await sb.from('perfiles').select('*').eq('id', session.user.id).maybeSingle();
+        perfil = data;
+      }
+      const { data: p, error } = await sb.from('proyectos')
+        .select('*,perfiles(nombre,web,descripcion),lineas(*,hitos(*))').eq('id', id).maybeSingle();
+      if (error) throw error;
+      if (!p) throw new Error('Este proyecto no existe o no está publicado.');
+      document.title = `${p.titulo} · 3SN`;
+      const cfg = await P3.config();
+      box.innerHTML = `
+        <section class="card">
+          <p class="small">${esc(p.perfiles?.nombre || 'ONG')}${p.ubicacion ? ` · ${esc(p.ubicacion)}` : ''} ${estado(p.estado)}</p>
+          <h1>${esc(p.titulo)}</h1>
+          <p>${esc(p.resumen)}</p>
+          <div class="tags">${(p.ods || []).map((n) => `<span class="tag">ODS ${n} · ${esc(ODS[n] || '')}</span>`).join('')}</div>
+          ${p.perfiles?.web ? `<p class="small"><a href="${esc(p.perfiles.web)}" rel="noopener" target="_blank">Web de la entidad</a></p>` : ''}
+        </section>
+        <h2 class="section-title">Líneas financiables</h2>
+        ${p.lineas.length ? p.lineas.sort((a, b) => a.creado.localeCompare(b.creado)).map((l) => lineaHtml(l, cfg)).join('') : '<p class="muted">Este proyecto aún no tiene líneas.</p>'}`;
+      box.querySelectorAll('form.fund').forEach((f) => f.addEventListener('submit', financiar));
+    } catch (err) {
+      box.innerHTML = '';
+      errEl.textContent = err.message;
+    }
+
+    function lineaHtml(l, cfg) {
+      const hitos = (l.hitos || []).sort((a, b) => a.orden - b.orden);
+      let accion = '';
+      if (l.estado === 'abierta') {
+        if (!session) accion = `<a class="btn btn-primary" href="/portal/entrar.html?volver=${encodeURIComponent(location.pathname + location.search)}">Entra para financiar esta línea</a>`;
+        else if (perfil?.tipo === 'financiador') accion = `
+          <form class="fund" data-linea="${esc(l.id)}" data-importe="${esc(l.importe)}">
+            <label>Mensaje para la ONG (opcional)<textarea name="mensaje" rows="2" maxlength="2000" placeholder="Cuéntales por qué os interesa esta línea"></textarea></label>
+            <button class="btn btn-primary" type="submit">Comprometer ${eur(l.importe)}</button>
+            <p class="small">Sin pago ahora: la ONG revisa tu propuesta y se genera un convenio para firmar. Comisión de 3SN: ${esc(cfg.comisionPct)} %, solo cuando se valida cada hito.</p>
+            <p class="msg"></p>
+          </form>`;
+        else if (perfil?.tipo === 'ong') accion = '<p class="small muted">Las líneas las financian empresas y entidades financiadoras.</p>';
+        else accion = '<a class="btn" href="/portal/panel.html">Completa tu perfil para financiar</a>';
+      }
+      return `<article class="card linea">
+        <div class="linea-head"><h3>${esc(l.titulo)}</h3><p class="amount">${eur(l.importe)}</p></div>
+        <p>${estado(l.estado)}</p>
+        <p>${esc(l.descripcion)}</p>
+        ${(l.contrapartidas || []).length ? `<h4>Contrapartidas para quien financia</h4><ul>${l.contrapartidas.map((c) => `<li>${esc(c)}</li>`).join('')}</ul>` : ''}
+        <h4>Hitos y entregables</h4>
+        <ol class="hitos">${hitos.map((h) => `<li><strong>${esc(h.titulo)}</strong> · ${esc(h.porcentaje)} % — ${esc(h.entregable)}${h.fecha_prevista ? ` <span class="small">(${esc(h.fecha_prevista)})</span>` : ''}</li>`).join('')}</ol>
+        ${accion}
+      </article>`;
+    }
+
+    async function financiar(e) {
+      e.preventDefault();
+      const f = e.target;
+      const msg = f.querySelector('.msg');
+      const btn = f.querySelector('button');
+      btn.disabled = true;
+      try {
+        const { error } = await sb.from('compromisos').insert({
+          linea_id: f.dataset.linea, financiador_id: session.user.id, importe: Number(f.dataset.importe),
+          mensaje: f.mensaje.value.trim() || null,
+        });
+        if (error) throw error;
+        f.innerHTML = '<p class="ok">¡Propuesta enviada! La ONG la revisará. Puedes seguirla en <a href="/portal/panel.html">tu panel</a>.</p>';
+      } catch (err) {
+        P3.flash(msg, err.message);
+        btn.disabled = false;
+      }
+    }
+  })();
+  </script>
+</body>
+</html>

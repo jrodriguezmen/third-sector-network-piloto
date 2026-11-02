@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Entrar · 3SN</title>
+  <link rel="stylesheet" href="/assets/style.css">
+  <link rel="stylesheet" href="/assets/portal/portal.css">
+</head>
+<body>
+  <nav class="topnav"><div class="container">
+    <a class="logo" href="/portal/">3SN</a>
+    <a href="/portal/">Proyectos</a>
+    <a href="/">Marco Lógico</a>
+    <a href="/portal/verificar.html">Verificar</a>
+  </div></nav>
+  <main class="container narrow">
+    <section class="card">
+      <h1>Entrar en 3SN</h1>
+      <p>Escribe tu email y te enviamos un enlace para entrar. Sin contraseñas.</p>
+      <form id="login" novalidate>
+        <label>Email<input type="email" name="email" required autocomplete="email" placeholder="tu@entidad.org"></label>
+        <button class="btn btn-primary" type="submit">Enviarme el enlace</button>
+      </form>
+      <p class="error" id="msg" role="alert"></p>
+      <p class="small">Al entrar por primera vez te pediremos si eres una ONG o una entidad financiadora.</p>
+    </section>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+  <script src="/assets/portal/common.js"></script>
+  <script>
+  (async function () {
+    const msg = document.getElementById('msg');
+    const form = document.getElementById('login');
+    try {
+      if (await P3.session()) { location.href = '/portal/panel.html'; return; }
+    } catch (err) { P3.flash(msg, err.message); }
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = form.email.value.trim();
+      if (!/^\S+@\S+\.\S+$/.test(email)) { P3.flash(msg, 'Escribe un email válido.'); return; }
+      const btn = form.querySelector('button');
+      btn.disabled = true;
+      try {
+        const sb = await P3.client();
+        const volver = P3.qs('volver');
+        const destino = `${location.origin}/portal/panel.html${volver ? `?volver=${encodeURIComponent(volver)}` : ''}`;
+        const { error } = await sb.auth.signInWithOtp({ email, options: { emailRedirectTo: destino } });
+        if (error) throw error;
+        P3.flash(msg, `Te hemos enviado un enlace a ${email}. Ábrelo desde este mismo navegador.`, 'ok');
+      } catch (err) {
+        P3.flash(msg, err.message);
+        btn.disabled = false;
+      }
+    });
+  })();
+  </script>
+</body>
+</html>
