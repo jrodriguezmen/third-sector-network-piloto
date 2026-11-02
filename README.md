@@ -14,6 +14,10 @@ Controles sin base de datos:
 - Cada pago permite **3 versiones** del mismo proyecto. El contador se guarda en los metadatos del pago en Stripe. Si la IA falla, la versión no se gasta.
 - El resultado se guarda en el navegador de la persona: al recargar la página no se gasta otra versión.
 
+## Códigos de acceso para el piloto
+
+Para que una ONG obtenga la matriz completa **sin pagar**, crea en Vercel la variable `PILOT_CODES` con códigos separados por comas (por ejemplo `ACOGE-2026,VERDE-2026`) y vuelve a desplegar. La ONG hace la vista previa, pulsa **«¿Tienes un código de acceso?»** debajo del precio y escribe su código. Para desactivar un código, quítalo de la lista y vuelve a desplegar. Cada uso queda anotado en los registros de Vercel (`[piloto] generación con código …`).
+
 ## Estructura
 
 ```
@@ -37,7 +41,7 @@ test/               Tests (npm test)
    - `ANTHROPIC_API_KEY`
    - `STRIPE_SECRET_KEY`
    - `SITE_URL` (la URL que te dé Vercel, sin barra final)
-   - Opcionales: `PRICE_EUR_CENTS`, `MAX_GENERATIONS`, `MODEL_PREVIEW`, `MODEL_FULL`
+   - Opcionales: `PILOT_CODES`, `PRICE_EUR_CENTS`, `MAX_GENERATIONS`, `MODEL_PREVIEW`, `MODEL_FULL`
 5. **Prueba en modo test:** genera una vista previa, paga con la tarjeta de prueba `4242 4242 4242 4242` (cualquier fecha futura y CVC) y comprueba que llegan la matriz y el Word.
 6. **Pasa a real:** cambia `STRIPE_SECRET_KEY` por la clave `sk_live_…` y vuelve a desplegar.
 

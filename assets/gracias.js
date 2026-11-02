@@ -1,6 +1,8 @@
 (function () {
   const STORAGE_KEY = '3sn_ml_form';
-  const sessionId = new URLSearchParams(location.search).get('session_id') || '';
+  const params = new URLSearchParams(location.search);
+  const sessionId = params.get('session_id') || '';
+  const pilotCode = params.get('codigo') || '';
   const status = document.getElementById('status');
   const result = document.getElementById('result');
   const errorEl = document.getElementById('error');
@@ -11,8 +13,14 @@
   let docxBase64 = null;
   let title = 'marco-logico';
 
-  const cacheKey = `3sn_ml_result_${sessionId}`;
   const getForm = () => { try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null'); } catch { return null; } };
+  // Con código de piloto, la caché depende también del proyecto (el mismo código sirve para varios).
+  const formKey = (f) => { const t = JSON.stringify(f || {}); let h = 0; for (let i = 0; i < t.length; i++) h = (h * 31 + t.charCodeAt(i)) | 0; return String(h >>> 0); };
+  const cacheKey = pilotCode ? `3sn_ml_result_code_${pilotCode}_${formKey(getForm())}` : `3sn_ml_result_${sessionId}`;
+  if (pilotCode) {
+    document.querySelector('.hero h1').textContent = 'Tu matriz completa';
+    document.querySelector('.hero .lead').textContent = 'Acceso de piloto: gracias por ayudarnos a mejorar 3SN. Tu opinión nos importa mucho.';
+  }
   const getCache = () => { try { return JSON.parse(localStorage.getItem(cacheKey) || 'null'); } catch { return null; } };
   const setCache = (v) => { try { localStorage.setItem(cacheKey, JSON.stringify(v)); } catch { /* opcional */ } };
 
@@ -22,14 +30,19 @@
     status.innerHTML = '';
     result.innerHTML = window.ML.renderFull(data.matrix);
     actions.classList.remove('hidden');
-    regenBtn.disabled = data.remaining <= 0;
-    remainingEl.textContent = data.remaining > 0 ? `Te quedan ${data.remaining} versiones.` : 'Has usado todas las versiones de este proyecto.';
+    if (data.pilot) {
+      regenBtn.disabled = false;
+      remainingEl.textContent = 'Acceso de piloto.';
+    } else {
+      regenBtn.disabled = data.remaining <= 0;
+      remainingEl.textContent = data.remaining > 0 ? `Te quedan ${data.remaining} versiones.` : 'Has usado todas las versiones de este proyecto.';
+    }
   }
 
   async function generate() {
     errorEl.textContent = '';
     const form = getForm();
-    if (!sessionId || !form) {
+    if ((!sessionId && !pilotCode) || !form) {
       status.innerHTML = '';
       errorEl.textContent = 'No encontramos los datos del proyecto en este navegador. Abre este enlace en el mismo navegador donde rellenaste el formulario, o escríbenos con el email de tu pago.';
       return;
@@ -40,7 +53,7 @@
       const res = await fetch('/api/generate', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ session_id: sessionId, form }),
+        body: JSON.stringify(pilotCode ? { pilot_code: pilotCode, form } : { session_id: sessionId, form }),
       });
       const json = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(json.error || 'Error inesperado');
