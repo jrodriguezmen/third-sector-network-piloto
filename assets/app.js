@@ -57,6 +57,17 @@
     }
   });
 
+  // Código de acceso del piloto: lleva a la página de la matriz sin pasar por el pago.
+  const codeForm = document.getElementById('code-form');
+  codeForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    buyError.textContent = '';
+    const code = document.getElementById('code-input').value.trim();
+    if (!code) { buyError.textContent = 'Escribe tu código de acceso.'; return; }
+    store.set(store.get() || readForm());
+    window.location.href = `gracias.html?codigo=${encodeURIComponent(code)}`;
+  });
+
   buyBtn.addEventListener('click', async () => {
     buyError.textContent = '';
     const data = store.get() || readForm();

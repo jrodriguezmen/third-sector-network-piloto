@@ -108,3 +108,27 @@ test('generate: si la IA falla, devuelve la versión reservada', async () => {
   assert.deepEqual(stripe.state.updates, ['2', '1']);
   assert.doesNotMatch(res.payload.error, /roto/);
 });
+
+test('generate: con código de piloto válido genera sin Stripe; inválido o sin códigos, 403', async () => {
+  const stripe = fakeStripe({ hash: 'x' });
+  setStripeClient(stripe);
+  process.env.PILOT_CODES = 'ONG-ACOGE, ong-verde';
+  mockClaude([JSON.stringify(FULL_MATRIX)]);
+  const ok = fakeRes();
+  await generate({ method: 'POST', body: { pilot_code: ' ong-acoge ', form: FORM } }, ok);
+  assert.equal(ok.statusCode, 200);
+  assert.equal(ok.payload.pilot, true);
+  assert.ok(ok.payload.docx.length > 1000);
+  assert.deepEqual(stripe.state.updates, [], 'no toca Stripe');
+
+  const getCalls = mockClaude([JSON.stringify(FULL_MATRIX)]);
+  const bad = fakeRes();
+  await generate({ method: 'POST', body: { pilot_code: 'OTRO', form: FORM } }, bad);
+  assert.equal(bad.statusCode, 403);
+  process.env.PILOT_CODES = '';
+  const none = fakeRes();
+  await generate({ method: 'POST', body: { pilot_code: 'ONG-ACOGE', form: FORM } }, none);
+  assert.equal(none.statusCode, 403);
+  assert.equal(getCalls(), 0, 'no llama a la IA con códigos no válidos');
+  delete process.env.PILOT_CODES;
+});

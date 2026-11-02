@@ -76,6 +76,13 @@
           <p class="small">pago único por proyecto</p>
           <button class="btn btn-primary" id="buy-btn">Obtener matriz completa</button>
           <p class="small">Pago seguro con Stripe</p>
+          <details class="code-box">
+            <summary>¿Tienes un código de acceso?</summary>
+            <form id="code-form" novalidate>
+              <input id="code-input" name="codigo" maxlength="40" autocomplete="off" placeholder="Escribe tu código" aria-label="Código de acceso">
+              <button class="btn" type="submit">Usar código</button>
+            </form>
+          </details>
         </div>
       </div>
       <p class="error" id="buy-error" role="alert"></p>

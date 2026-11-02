@@ -73,3 +73,7 @@ input:focus, textarea:focus { outline: 2px solid var(--brand-2); outline-offset:
 .loading::before { content: ""; display: inline-block; width: 14px; height: 14px; margin-right: 8px; border: 2px solid var(--line); border-top-color: var(--brand); border-radius: 50%; animation: spin 1s linear infinite; vertical-align: -2px; }
 @keyframes spin { to { transform: rotate(360deg); } }
 .footer { color: var(--muted); font-size: .85rem; padding-top: 24px; padding-bottom: 40px; }
+.code-box { margin-top: 14px; text-align: left; font-size: .9rem; }
+.code-box summary { cursor: pointer; color: var(--brand); text-align: center; }
+.code-box form { display: flex; gap: 8px; margin-top: 10px; }
+.code-box input { margin-top: 0; }
