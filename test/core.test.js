@@ -27,9 +27,9 @@ test('formHash cambia si cambia el proyecto e ignora espacios exteriores', () =>
 test('buildPrompt incluye los datos y el esquema correcto según el modo', () => {
   const full = buildPrompt(cleanForm(FORM), 'full');
   assert.match(full.user, /Usera, Madrid/);
-  assert.match(full.user, /actividades/);
+  assert.ok('actividades' in full.tool.input_schema.properties.resultados.items.properties);
   const preview = buildPrompt(cleanForm(FORM), 'preview');
-  assert.doesNotMatch(preview.user, /"actividades"/);
+  assert.equal('actividades' in preview.tool.input_schema.properties.resultados.items.properties, false);
 });
 
 test('parseMatrix acepta JSON con texto alrededor y normaliza', () => {
@@ -59,6 +59,29 @@ test('generateMatrix usa el modelo de cada modo y reintenta una vez si el JSON f
   assert.equal(fetchPrev.calls[0].body.model, 'claude-haiku-5-5');
 
   await assert.rejects(generateMatrix(cleanForm(FORM), 'full', { fetchImpl: fakeFetch(['x', 'y']) }), /No se pudo generar/);
+});
+
+test('generateMatrix fuerza la herramienta con esquema y usa su salida estructurada', async () => {
+  const calls = [];
+  const fetchImpl = async (url, init) => {
+    calls.push(JSON.parse(init.body));
+    return { ok: true, status: 200, json: async () => ({ stop_reason: 'tool_use', content: [{ type: 'tool_use', name: 'guardar_matriz', input: FULL_MATRIX }] }) };
+  };
+  const m = await generateMatrix(cleanForm(FORM), 'full', { fetchImpl });
+  assert.equal(m.resultados[1].actividades[0].codigo, 'A2.1');
+  assert.deepEqual(calls[0].tool_choice, { type: 'tool', name: 'guardar_matriz' });
+  assert.ok(calls[0].tools[0].input_schema.required.includes('riesgos'));
+});
+
+test('generateMatrix reintenta si se corta por longitud y no reintenta errores de la API', async () => {
+  let n = 0;
+  const cut = async () => { n++; return { ok: true, status: 200, json: async () => ({ stop_reason: 'max_tokens', content: [] }) }; };
+  await assert.rejects(generateMatrix(cleanForm(FORM), 'preview', { fetchImpl: cut }), /se cortó/);
+  assert.equal(n, 2);
+  let m = 0;
+  const apiErr = async () => { m++; return { ok: false, status: 400, text: async () => 'bad request' }; };
+  await assert.rejects(generateMatrix(cleanForm(FORM), 'preview', { fetchImpl: apiErr }), /API de Claude \(400\)/);
+  assert.equal(m, 1);
 });
 
 test('matrixToDocxBase64 produce un .docx válido con la matriz', async () => {
