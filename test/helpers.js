@@ -75,3 +75,47 @@ export function fakeStripe({ paid = true, hash, genCount = '0' } = {}) {
     },
   };
 }
+
+// Respuestas en el formato por líneas, con algo de "ruido" realista (viñetas, negritas, continuaciones).
+export const PREVIEW_LINES = `TITULO: Telemedicina rural en Guatemala
+RESUMEN: Servicio de teleconsulta para comunidades indígenas.
+PROBLEMA: Acceso limitado a la salud materno-infantil
+CAUSA: Distancia a los centros de salud
+CAUSA: Escasez de personal médico
+EFECTO: Mortalidad materna evitable
+OG: Contribuir a mejorar la salud de la población indígena rural
+OE: Mejorado el acceso a atención materno-infantil en 10 comunidades
+R: R1 | Implantado un servicio de teleconsulta
+R: R2 | Fortalecidas las capacidades del personal comunitario`;
+
+export const FULL_LINES = `\`\`\`
+TITULO: Telemedicina rural en Guatemala
+RESUMEN: Servicio de teleconsulta para comunidades indígenas.
+PROBLEMA: Acceso limitado a la salud materno-infantil
+CAUSA: Distancia a los centros de salud
+- CAUSA: Escasez de personal médico
+EFECTO: Mortalidad materna evitable
+OG: Contribuir a mejorar la salud de la población indígena rural
+IND: Al final del proyecto, la mortalidad materna se reduce un 10 %
+IND: Al mes 12, el 60 % de los partos tienen control prenatal
+FV: Estadísticas del Ministerio de Salud
+SUP: Estabilidad política en la región
+OE: Mejorado el acceso a atención materno-infantil en 10 comunidades
+**IND:** Al mes 12, 800 teleconsultas realizadas
+FV: Registros del puesto de salud
+SUP: Las comunidades aceptan el servicio
+R: R1 | Implantado un servicio de teleconsulta en 10 puestos de salud
+IND: Al mes 6, 10 puestos con conexión estable
+FV: Informe técnico
+SUP: El operador mantiene la cobertura
+A: A1.1 | Diagnóstico de conectividad | Técnico de redes
+A: A1.2 | Instalación de equipos | Técnico, 4 tablets
+R: R2 | Implantado un modelo de atención culturalmente
+adaptado y apropiado por las comunidades
+IND: Al mes 12, el 80 % de usuarias satisfechas
+FV: Encuesta de satisfacción
+SUP: Participación de autoridades comunitarias
+A: A2.1 | Formación de promotoras en idioma maya | Formadora bilingüe
+PRE: Convenio con el Ministerio de Salud
+RIESGO: Cortes de conectividad | Conexión satelital de respaldo
+\`\`\``;

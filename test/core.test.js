@@ -1,11 +1,12 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import JSZip from 'jszip';
-import { generateMatrix } from '../lib/anthropic.js';
+import { generateMatrix, interpret } from '../lib/anthropic.js';
 import { matrixToDocxBase64 } from '../lib/docx.js';
 import { cleanForm, formHash, ValidationError } from '../lib/form.js';
+import { parseLines } from '../lib/lines.js';
 import { buildPrompt, parseMatrix } from '../lib/prompt.js';
-import { fakeFetch, FORM, FULL_MATRIX, PREVIEW_MATRIX } from './helpers.js';
+import { fakeFetch, FORM, FULL_LINES, FULL_MATRIX, PREVIEW_LINES, PREVIEW_MATRIX } from './helpers.js';
 
 process.env.ANTHROPIC_API_KEY = 'test-key';
 
@@ -24,19 +25,35 @@ test('formHash cambia si cambia el proyecto e ignora espacios exteriores', () =>
   assert.notEqual(a, formHash(cleanForm({ ...FORM, titulo: 'Otro proyecto distinto' })));
 });
 
-test('buildPrompt incluye los datos y el esquema correcto según el modo', () => {
+test('buildPrompt incluye los datos y el formato por líneas según el modo', () => {
   const full = buildPrompt(cleanForm(FORM), 'full');
   assert.match(full.user, /Usera, Madrid/);
-  assert.ok('actividades' in full.tool.input_schema.properties.resultados.items.properties);
+  assert.match(full.user, /^A: A1\.1/m);
+  assert.match(full.user, /^RIESGO:/m);
   const preview = buildPrompt(cleanForm(FORM), 'preview');
-  assert.equal('actividades' in preview.tool.input_schema.properties.resultados.items.properties, false);
+  assert.doesNotMatch(preview.user, /^A: /m);
+  assert.doesNotMatch(preview.user, /^IND: /m);
 });
 
-test('parseMatrix acepta JSON con texto alrededor y normaliza', () => {
-  const m = parseMatrix(`Aquí tienes:\n${JSON.stringify(FULL_MATRIX)}\nFin`, 'full');
+test('parseLines monta la matriz completa: niveles, actividades, continuaciones y formato desordenado', () => {
+  const m = parseLines(FULL_LINES);
+  assert.equal(m.titulo, 'Telemedicina rural en Guatemala');
+  assert.equal(m.arbol_problemas.causas.length, 2);
+  assert.equal(m.objetivo_general.indicadores.length, 2);
+  assert.equal(m.objetivo_especifico.fuentes[0], 'Registros del puesto de salud');
   assert.equal(m.resultados.length, 2);
-  assert.equal(m.resultados[0].actividades[0].codigo, 'A1.1');
-  assert.deepEqual(parseMatrix(JSON.stringify(PREVIEW_MATRIX), 'preview').resultados[0].indicadores, []);
+  assert.equal(m.resultados[0].codigo, 'R1');
+  assert.equal(m.resultados[0].actividades[1].recursos, 'Técnico, 4 tablets');
+  assert.match(m.resultados[1].descripcion, /culturalmente adaptado y apropiado/, 'une las líneas de continuación');
+  assert.equal(m.riesgos[0].mitigacion, 'Conexión satelital de respaldo');
+  const parsed = parseMatrix(m, 'full');
+  assert.equal(parsed.resultados[1].actividades[0].codigo, 'A2.1');
+});
+
+test('interpret acepta el formato por líneas y, como respaldo, JSON', () => {
+  assert.equal(interpret(PREVIEW_LINES, 'preview').resultados.length, 2);
+  assert.equal(interpret(JSON.stringify(FULL_MATRIX), 'full').resultados.length, 2);
+  assert.throws(() => interpret('Lo siento, no puedo.', 'full'), /Falta el objetivo general/);
 });
 
 test('parseMatrix rechaza matrices completas sin indicadores o actividades', () => {
@@ -46,31 +63,36 @@ test('parseMatrix rechaza matrices completas sin indicadores o actividades', () 
   assert.throws(() => parseMatrix('sin json', 'full'), /no contiene JSON/);
 });
 
-test('generateMatrix usa el modelo de cada modo y reintenta una vez si el JSON falla', async () => {
-  const fetchImpl = fakeFetch(['esto no es json', JSON.stringify(FULL_MATRIX)]);
+test('parseMatrix tolera claves en camelCase, niveles como texto, envoltorios y JSON dentro de texto', () => {
+  const raw = {
+    matriz: JSON.stringify({
+      tituloProyecto: 'Proyecto X',
+      objetivoGeneral: 'Contribuir a la inclusión',
+      'Objetivo específico': { enunciado: 'Mejorada la empleabilidad', IOV: ['70 %'], fuentesDeVerificacion: ['Encuesta'], hipotesis: ['Estabilidad'] },
+      resultados: [{ codigo: 'R1', resultado: 'Adquiridas competencias', iov: ['80 %'], fuentes: ['Actas'], supuestos: ['Asistencia'], actividades: [{ codigo: 'A1.1', nombre: 'Talleres', recursos: 'Aula' }] }],
+    }),
+  };
+  const m = parseMatrix(raw, 'preview');
+  assert.equal(m.titulo, 'Proyecto X');
+  assert.equal(m.objetivo_general.descripcion, 'Contribuir a la inclusión');
+  assert.deepEqual(m.objetivo_especifico.indicadores, ['70 %']);
+  assert.equal(m.resultados[0].actividades[0].descripcion, 'Talleres');
+});
+
+test('generateMatrix pide texto plano al modelo de cada modo y reintenta una vez', async () => {
+  const fetchImpl = fakeFetch(['Respuesta sin etiquetas', FULL_LINES]);
   const m = await generateMatrix(cleanForm(FORM), 'full', { fetchImpl });
-  assert.equal(m.titulo, FORM.titulo);
+  assert.equal(m.resultados.length, 2);
   assert.equal(fetchImpl.calls.length, 2);
   assert.equal(fetchImpl.calls[0].body.model, 'claude-sonnet-5-5');
+  assert.equal('tools' in fetchImpl.calls[0].body, false);
   assert.equal(fetchImpl.calls[0].headers['x-api-key'], 'test-key');
 
-  const fetchPrev = fakeFetch([JSON.stringify(PREVIEW_MATRIX)]);
+  const fetchPrev = fakeFetch([PREVIEW_LINES]);
   await generateMatrix(cleanForm(FORM), 'preview', { fetchImpl: fetchPrev });
   assert.equal(fetchPrev.calls[0].body.model, 'claude-haiku-5-5');
 
   await assert.rejects(generateMatrix(cleanForm(FORM), 'full', { fetchImpl: fakeFetch(['x', 'y']) }), /No se pudo generar/);
-});
-
-test('generateMatrix fuerza la herramienta con esquema y usa su salida estructurada', async () => {
-  const calls = [];
-  const fetchImpl = async (url, init) => {
-    calls.push(JSON.parse(init.body));
-    return { ok: true, status: 200, json: async () => ({ stop_reason: 'tool_use', content: [{ type: 'tool_use', name: 'guardar_matriz', input: FULL_MATRIX }] }) };
-  };
-  const m = await generateMatrix(cleanForm(FORM), 'full', { fetchImpl });
-  assert.equal(m.resultados[1].actividades[0].codigo, 'A2.1');
-  assert.deepEqual(calls[0].tool_choice, { type: 'tool', name: 'guardar_matriz' });
-  assert.ok(calls[0].tools[0].input_schema.required.includes('riesgos'));
 });
 
 test('generateMatrix reintenta si se corta por longitud y no reintenta errores de la API', async () => {
@@ -91,40 +113,4 @@ test('matrixToDocxBase64 produce un .docx válido con la matriz', async () => {
   assert.match(xml, /Talleres de alfabetización digital/);
   assert.match(xml, /Indicadores objetivamente verificables/);
   assert.match(xml, /Asociación Ejemplo/);
-});
-
-// Va al final: marca el modelo grande como "solo auto" para el resto del proceso.
-test('generateMatrix pasa a tool_choice auto si el modelo no admite forzar la herramienta', async () => {
-  const calls = [];
-  const fetchImpl = async (url, init) => {
-    const body = JSON.parse(init.body);
-    calls.push(body.tool_choice.type);
-    if (body.tool_choice.type === 'tool') {
-      return { ok: false, status: 400, text: async () => '{"error":{"message":"tool_choice: type \\"tool\\" and \\"any\\" are not supported for this model."}}' };
-    }
-    return { ok: true, status: 200, json: async () => ({ stop_reason: 'tool_use', content: [{ type: 'tool_use', input: FULL_MATRIX }] }) };
-  };
-  const m = await generateMatrix(cleanForm(FORM), 'full', { fetchImpl });
-  assert.equal(m.titulo, FORM.titulo);
-  assert.deepEqual(calls, ['tool', 'auto']);
-  await generateMatrix(cleanForm(FORM), 'full', { fetchImpl });
-  assert.deepEqual(calls, ['tool', 'auto', 'auto'], 'recuerda que ese modelo solo admite auto');
-});
-
-test('parseMatrix tolera claves en camelCase, niveles como texto, envoltorios y JSON dentro de texto', () => {
-  const raw = {
-    matriz: JSON.stringify({
-      tituloProyecto: 'Proyecto X',
-      objetivoGeneral: 'Contribuir a la inclusión',
-      'Objetivo específico': { enunciado: 'Mejorada la empleabilidad', IOV: ['70 %'], fuentesDeVerificacion: ['Encuesta'], hipotesis: ['Estabilidad'] },
-      resultados: [{ codigo: 'R1', resultado: 'Adquiridas competencias', iov: ['80 %'], fuentes: ['Actas'], supuestos: ['Asistencia'], actividades: [{ codigo: 'A1.1', nombre: 'Talleres', recursos: 'Aula' }] }],
-    }),
-  };
-  const m = parseMatrix(raw, 'preview');
-  assert.equal(m.titulo, 'Proyecto X');
-  assert.equal(m.objetivo_general.descripcion, 'Contribuir a la inclusión');
-  assert.equal(m.objetivo_especifico.descripcion, 'Mejorada la empleabilidad');
-  assert.deepEqual(m.objetivo_especifico.indicadores, ['70 %']);
-  assert.equal(m.resultados[0].descripcion, 'Adquiridas competencias');
-  assert.equal(m.resultados[0].actividades[0].descripcion, 'Talleres');
 });
