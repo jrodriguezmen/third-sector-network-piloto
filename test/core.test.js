@@ -92,3 +92,21 @@ test('matrixToDocxBase64 produce un .docx válido con la matriz', async () => {
   assert.match(xml, /Indicadores objetivamente verificables/);
   assert.match(xml, /Asociación Ejemplo/);
 });
+
+// Va al final: marca el modelo grande como "solo auto" para el resto del proceso.
+test('generateMatrix pasa a tool_choice auto si el modelo no admite forzar la herramienta', async () => {
+  const calls = [];
+  const fetchImpl = async (url, init) => {
+    const body = JSON.parse(init.body);
+    calls.push(body.tool_choice.type);
+    if (body.tool_choice.type === 'tool') {
+      return { ok: false, status: 400, text: async () => '{"error":{"message":"tool_choice: type \\"tool\\" and \\"any\\" are not supported for this model."}}' };
+    }
+    return { ok: true, status: 200, json: async () => ({ stop_reason: 'tool_use', content: [{ type: 'tool_use', input: FULL_MATRIX }] }) };
+  };
+  const m = await generateMatrix(cleanForm(FORM), 'full', { fetchImpl });
+  assert.equal(m.titulo, FORM.titulo);
+  assert.deepEqual(calls, ['tool', 'auto']);
+  await generateMatrix(cleanForm(FORM), 'full', { fetchImpl });
+  assert.deepEqual(calls, ['tool', 'auto', 'auto'], 'recuerda que ese modelo solo admite auto');
+});
