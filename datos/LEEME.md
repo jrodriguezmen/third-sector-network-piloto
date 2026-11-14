@@ -62,6 +62,10 @@ Avisos sobre estos datos:
 - **En las grandes redes internacionales**, "entidades privadas" puede incluir fondos de la propia red. Un ejemplo es Oxfam Intermón: 37,5 M€ de sus ingresos son subvenciones de entidades privadas.
 - **Euskadi no distingue empresas** en su financiación privada; solo separa particulares de otros ingresos.
 
+## Lista de ONG objetivo para el piloto (añadido el 14/11/2026)
+
+**`ong_objetivo_piloto.csv`**: 30 ONGD estatales con ingresos de 2024 entre 0,3 y 10 M€ y con un 10 % o menos de ingresos procedentes de empresas y fundaciones. Las 20 primeras tienen sede en Madrid. Se genera con `hacer_lista_ong_objetivo.py` a partir de `ongd_proyectos_y_financiacion_2024.csv`, `congde_socias.json` y `congde_informe_2025/data_forma_juridica_tamanho.csv`. Explicación en `borradores/lista-ong-objetivo.md`.
+
 ## Pendiente: proyectos uno a uno y subvenciones públicas detalladas
 
 Desde el entorno en la nube no hay acceso a estas fuentes. Hay que descargarlas desde el ordenador de José Carlos:

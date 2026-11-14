@@ -1,6 +1,8 @@
 # Estado de 3SN
 
-*Actualizado: 14 de noviembre de 2026 (creación del agente).*
+*Actualizado: 14 de noviembre de 2026, 20:00 (primera ejecución del agente).*
+
+**Aviso:** en esta ejecución no se pudo comprobar que la web responde (la herramienta de lectura de páginas no obtuvo permiso). No hay indicio de fallo, pero está sin comprobar.
 
 ## Fase actual: 1 — Problema
 
@@ -15,9 +17,9 @@
 
 ## Necesito de ti (máximo 3)
 
-1. **Decidir quién firma los mensajes** (10 min). Los correos a ONG necesitan una persona o una marca detrás. Opciones: tu nombre, "equipo 3SN" con un correo propio, o un alias. Sin esto los borradores se quedan sin firma.
-2. **Probar el portal con dos cuentas** (20 min). Entra en `/portal/entrar.html` con un correo como ONG y publica un proyecto de prueba; con otro correo, como empresa, comprométete con una línea. Aún no se ha hecho ninguna prueba real de principio a fin.
-3. **Definir los códigos de piloto** (5 min). Añadir la variable `PILOT_CODES` en Vercel con 5–10 códigos para repartir a las primeras ONG.
+1. **Decidir quién firma los mensajes** (10 min). El correo a ONG piloto ya está escrito (`borradores/correo-ong-piloto.md` y un borrador en tu Gmail con asunto "[BORRADOR 3SN]"). Solo falta la firma. Opciones: tu nombre, "equipo 3SN" con un correo propio, o un alias. Dímelo y relleno todos los borradores.
+2. **Activar los códigos de piloto** (5 min). El correo promete una matriz gratis; sin códigos no se puede cumplir. En vercel.com → proyecto third-sector-network-piloto → Settings → Environment Variables → añadir `PILOT_CODES` con, por ejemplo, `PILOTO-01,PILOTO-02,PILOTO-03,PILOTO-04,PILOTO-05` → Save → Deployments → Redeploy.
+3. **Abrir la web y probar el portal con dos cuentas** (20 min). Primero abre https://third-sector-network-piloto.vercel.app y https://third-sector-network-piloto.vercel.app/portal/ y dime si cargan (hoy no pude comprobarlo). Después entra en `/portal/entrar.html` con un correo como ONG y publica un proyecto de prueba; con otro correo, como empresa, comprométete con una línea.
 
 ## Plan
 
@@ -30,7 +32,8 @@
 - [ ] Forma de medir visitas y uso sin cookies (proponer opción; activar requiere a José Carlos).
 
 ### Datos
-- [ ] Lista de 30 ONG objetivo para el piloto a partir de `datos/`: tamaño medio, poca financiación de empresas, sede en Madrid primero.
+- [x] Lista de 30 ONG objetivo para el piloto (14/11): `datos/ong_objetivo_piloto.csv` y `borradores/lista-ong-objetivo.md`. 20 con sede en Madrid.
+- [ ] Para las 5 primeras ONG de la lista: buscar en su web el buzón o formulario del área de proyectos y un motivo concreto para escribirles (sin guardar nombres de personas).
 - [ ] Lista de 30 empresas y fundaciones corporativas objetivo (memorias de sostenibilidad, convocatorias propias).
 - [ ] Bloqueado: subvenciones públicas una a una (BDNS) y ayuda oficial por actividad (info@OD). Desde la nube no hay acceso a esas webs; hace falta el ordenador de José Carlos.
 
@@ -41,8 +44,8 @@
 
 ### Campañas y captación
 - [ ] Borrador de correo a la CONGDE: presentar 3SN, pedir permiso para usar sus datos y proponer una prueba con socias.
-- [ ] Borrador de correo a ONG piloto con oferta concreta: matriz completa gratis a cambio de 20 minutos de conversación.
-- [ ] Guion de entrevista de 20 minutos para validar el problema (10 preguntas, sin vender).
+- [x] Borrador de correo a ONG piloto (14/11): `borradores/correo-ong-piloto.md`, con variante corta y recordatorio. También en Gmail como borrador. Falta firma y códigos de piloto.
+- [x] Guion de entrevista de 20 minutos (14/11): `borradores/guion-entrevista-ong.md`, con ficha de resultados y criterio para contar una conversación como "confirma el problema".
 
 ### Venta de la plataforma
 - [ ] Mapa de posibles compradores o contratantes y qué pruebas pediría cada uno. Incluir cómo compra de verdad una administración (contrato, subvención, convenio), porque rara vez "compra" una plataforma.
@@ -51,6 +54,7 @@
 
 - 2/11/2026: flujo de dinero por hitos; ingresos por comisión; sellado en blockchain ahora y pagos con cripto más adelante; primera versión sin dinero real.
 - 14/11/2026: foco exclusivo en tercer sector. 2SN y 1SN quedan para después.
+- 14/11/2026 (propuesta del agente, pendiente de tu visto bueno): una conversación cuenta como "confirma el problema" si cumple dos de tres: da un coste concreto, ya ha gastado tiempo o dinero en resolverlo, o acepta probar la herramienta con fecha.
 
 ## Ideas aparcadas (2SN, 1SN y otras)
 
@@ -60,4 +64,10 @@
 
 | Organización | Tipo | Estado | Última acción | Siguiente paso |
 |---|---|---|---|---|
-| — | — | — | — | — |
+| FAD | ONGD | Sin contactar | En lista (14/11) | Enviar correo piloto cuando haya firma y códigos |
+| RESCATE | ONGD | Sin contactar | En lista (14/11) | Ídem |
+| Amigos de la Tierra | ONGD | Sin contactar | En lista (14/11) | Ídem |
+| AIETI | ONGD | Sin contactar | En lista (14/11) | Ídem |
+| Movimiento por la Paz -MPDL- | ONGD | Sin contactar | En lista (14/11) | Ídem |
+
+Las otras 25 están en `datos/ong_objetivo_piloto.csv`; se añaden aquí cuando se les escriba.
