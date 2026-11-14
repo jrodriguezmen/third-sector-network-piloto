@@ -1,0 +1,64 @@
+pais,ongd,poblacion,sectores
+Guatemala,AMSALA,"Mujeres | Población rural | Juventud | Población con discapacidad","Educación | Género | Infraestructuras (transporte y almacenamiento, comunicaciones, construcción, energía) | Salud"
+Argentina,AMSALA,Infancia,Educación
+Colombia,AMSALA,"Mujeres | Infancia | Familias | Juventud","Educación | Género | Salud | Infancia"
+Perú,AMSALA,"Infancia | Población rural | Juventud","Educación | Infraestructuras (transporte y almacenamiento, comunicaciones, construcción, energía)"
+Venezuela,AMSALA,"Infancia | Mayores de 65 años | Familias | Juventud","Educación | Infraestructuras (transporte y almacenamiento, comunicaciones, construcción, energía) | Salud | Infancia"
+Ecuador,AMSALA,Infancia,Educación
+Haití,AMSALA,"Infancia | Juventud",Educación
+México,AMSALA,Juventud,"Educación | Infraestructuras (transporte y almacenamiento, comunicaciones, construcción, energía)"
+"República Dominicana",ANACAONA,"Conjunto de la población | Mujeres | Mayores de 65 años | Población refugiada o migrante | Población rural","Agricultura | Apoyo a población refugiada en terceros países | Feminismos | Salud"
+Perú,"ARCORES-Red Solidaria Internacional Agustino Recoleta","Población rural","Educación | Salud"
+Mauritania,"Alianza por la Solidaridad - La Rioja","Mujeres | Familias | Población rural",Agricultura
+Bolivia,"Alianza por la Solidaridad - La Rioja","Mujeres | Población indígena/ minorías étnicas/ afrodescendientes","Derechos humanos | Derechos sexuales y reproductivos | Feminismos | Género | Interculturalidad"
+Colombia,"Alianza por la Solidaridad - La Rioja","Conjunto de la población | Mujeres | Población refugiada o migrante | Población desplazada | Familias | Población rural","Derechos humanos | Género | Interculturalidad | Otros servicios e infraestructuras sociales"
+España,"Alianza por la Solidaridad - La Rioja","Conjunto de la población | Mujeres | Población refugiada o migrante | Población rural | Juventud | Población con discapacidad","Derechos humanos | Educación | Feminismos | Género | Interculturalidad"
+"República Democrática del Congo","COOPERA - Jóvenes para la Cooperación Internacional al Desarrollo","Población desplazada | Familias | Población rural","Acción humanitaria y de emergencia"
+Senegal,"COOPERA - Jóvenes para la Cooperación Internacional al Desarrollo",Infancia,"Actividades económicas, industriales, (micro) financieras y comercio justo | Educación"
+Malí,"COOPERA - Jóvenes para la Cooperación Internacional al Desarrollo","Mujeres | Familias | Población rural","Género | Salud"
+"Sierra Leona","COOPERA - Jóvenes para la Cooperación Internacional al Desarrollo","Infancia | Población rural",Educación
+Líbano,"COOPERA - Jóvenes para la Cooperación Internacional al Desarrollo","Infancia | Población refugiada o migrante | Población desplazada | Familias | Población rural | Población con discapacidad","Educación | Salud | Infancia"
+"Cabo Verde","COOPERA - Jóvenes para la Cooperación Internacional al Desarrollo","Mujeres | Población rural","Agricultura | Género"
+Ucrania,"COOPERA - Jóvenes para la Cooperación Internacional al Desarrollo","Conjunto de la población","Acción humanitaria y de emergencia | Ayuda de emergencia y post-emergencia"
+India,"Cáritas La Rioja","Población rural","Acción humanitaria y de emergencia | Ayuda de emergencia y post-emergencia | Infraestructuras (transporte y almacenamiento, comunicaciones, construcción, energía) | Salud"
+"República Dominicana","Cáritas La Rioja",Mujeres,"Acción humanitaria y de emergencia | Educación | Género"
+Tanzania,"FISC La Rioja","Mujeres | Infancia | Familias","Derechos humanos | Educación | Género | Infraestructuras (transporte y almacenamiento, comunicaciones, construcción, energía)"
+España,"FISC La Rioja","Conjunto de la población | Mujeres | Infancia | Mayores de 65 años | Familias | Juventud | Población con discapacidad","Derechos humanos | Educación | Género | Infancia"
+España,"FISC La Rioja","Conjunto de la población | Mujeres | Infancia | Población refugiada o migrante | Familias | Juventud | Población con discapacidad","Derechos humanos | Educación | Género | Infancia"
+España,"FISC La Rioja","Conjunto de la población | Mujeres | Infancia | Mayores de 65 años | Familias | Juventud | Población con discapacidad","Derechos humanos | Educación | Género | Interculturalidad | Infancia"
+"El Salvador","Fundación Entreculturas La Rioja","Mujeres | Juventud","Educación | Género"
+Colombia,"Fundación Entreculturas La Rioja","Infancia | Familias | Población rural","Derechos humanos | Educación | Infancia"
+España,"Fundación Entreculturas La Rioja","Conjunto de la población",
+Colombia,"Fundación PROCLADE La Rioja","Conjunto de la población | Mujeres | Población indígena/ minorías étnicas/ afrodescendientes | Población rural","Derechos humanos | Género | Interculturalidad | Salud"
+Haití,"Fundación PROCLADE La Rioja","Conjunto de la población | Población refugiada o migrante | Población desplazada | Familias | Población rural","Acción humanitaria y de emergencia | Ayuda de emergencia y post-emergencia"
+España,"Fundación Pioneros","Población rural | Juventud","Derechos humanos | Educación | Género | Interculturalidad"
+India,"Fundación Vicente Ferrer","Conjunto de la población","Derechos sexuales y reproductivos | Salud"
+"Burkina Faso","Fundación Visión Mundi","Conjunto de la población","Educación | Salud"
+Tanzania,"Fundación Visión Mundi","Conjunto de la población","Educación | Salud"
+"Sierra Leona","Fundación Visión Mundi","Conjunto de la población",
+Alemania,Gantalcalá,"Conjunto de la población | Infancia | Población refugiada o migrante | Juventud | Población con discapacidad","Educación | Interculturalidad | Otros servicios e infraestructuras sociales | Infancia"
+"República Eslovaca",Gantalcalá,"Conjunto de la población | Juventud","Defensa del espacio cívico de la sociedad civil y apoyo a las organizaciones de la sociedad civil (OSC) | Educación | Interculturalidad | Otros servicios e infraestructuras sociales | Infancia"
+"Reino Unido",Gantalcalá,"Conjunto de la población | Población refugiada o migrante | Juventud","Defensa del espacio cívico de la sociedad civil y apoyo a las organizaciones de la sociedad civil (OSC) | Derechos humanos | Interculturalidad"
+Finlandia,Gantalcalá,"Conjunto de la población | Juventud","Otros servicios e infraestructuras sociales"
+Austria,Gantalcalá,"Conjunto de la población | Juventud | Población con discapacidad","Derechos humanos | Educación | Interculturalidad"
+"Países Bajos",Gantalcalá,"Conjunto de la población | Población rural | Juventud","Agricultura | Educación | Feminismos"
+Polonia,Gantalcalá,"Infancia | Juventud","Derechos humanos | Educación | Interculturalidad"
+Colombia,"ISCOD La Rioja","Mujeres | Juventud",Género
+Nicaragua,"ISCOD La Rioja",Mujeres,Género
+Marruecos,"ISCOD La Rioja",Mujeres,Género
+Perú,"Kaipacha Inti","Conjunto de la población | Mujeres | Familias | Población rural | Juventud","Agricultura | Educación | Género"
+España,"Kaipacha Inti","Conjunto de la población | Juventud","Educación | Género"
+Ecuador,"Manos Unidas La Rioja","Población rural","Actividades económicas, industriales, (micro) financieras y comercio justo | Agricultura | Derechos humanos | Género"
+Perú,"Manos Unidas La Rioja","Población rural","Actividades económicas, industriales, (micro) financieras y comercio justo | Agricultura | Agua y saneamiento"
+"El Salvador","Manos Unidas La Rioja","Mujeres | Población rural","Actividades económicas, industriales, (micro) financieras y comercio justo | Agricultura | Feminismos | Género | Otros servicios e infraestructuras sociales"
+"Sierra Leona","Manos Unidas La Rioja","Mujeres | Población rural","Actividades económicas, industriales, (micro) financieras y comercio justo | Agricultura | Derechos humanos | Género"
+Nicaragua,"Manos Unidas La Rioja","Mujeres | Población indígena/ minorías étnicas/ afrodescendientes | Población rural","Actividades económicas, industriales, (micro) financieras y comercio justo | Agricultura | Género"
+Guatemala,"Manos Unidas La Rioja","Mujeres | Población indígena/ minorías étnicas/ afrodescendientes | Población rural","Derechos humanos | Derechos sexuales y reproductivos | Género"
+Kenia,"María Salus Infirmorum de La Rioja",Familias,"Infraestructuras (transporte y almacenamiento, comunicaciones, construcción, energía)"
+"El Salvador","Medicus Mundi La Rioja","Conjunto de la población | Mujeres | Familias | Juventud","Agua y saneamiento | Derechos humanos | Educación | Salud"
+España,"Medicus Mundi La Rioja","Conjunto de la población | Infancia | Juventud","Agua y saneamiento | Educación | Salud"
+Colombia,"Movimiento por la Paz -MPDL- La Rioja","Mujeres | Población indígena/ minorías étnicas/ afrodescendientes | Población refugiada o migrante | Juventud","Actividades económicas, industriales, (micro) financieras y comercio justo | Apoyo a población refugiada en España | Defensa del espacio cívico de la sociedad civil y apoyo a las organizaciones de la sociedad civil (OSC) | Derechos humanos | Derechos sexuales y reproductivos | Educación | Feminismos | Género"
+Nicaragua,"Movimiento por la Paz -MPDL- La Rioja","Mujeres | Población rural","Derechos humanos | Derechos sexuales y reproductivos | Educación | Feminismos"
+Guatemala,"Movimiento por la Paz -MPDL- La Rioja","Mujeres | Familias | Población rural | Juventud","Actividades económicas, industriales, (micro) financieras y comercio justo | Agricultura | Apoyo a población refugiada en terceros países | Derechos humanos | Derechos sexuales y reproductivos | Educación | Feminismos"
+Marruecos,"Movimiento por la Paz -MPDL- La Rioja","Conjunto de la población | Mujeres | Población refugiada o migrante | Población desplazada",Género
+Ecuador,"SED Rioja - Solidaridad, Educación, Desarrollo","Población rural","Agricultura | Agua y saneamiento | Derechos humanos"
