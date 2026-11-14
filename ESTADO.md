@@ -1,8 +1,8 @@
 # Estado de 3SN
 
-*Actualizado: 14 de noviembre de 2026, 20:00 (primera ejecución del agente).*
+*Actualizado: 14 de noviembre de 2026, 20:15 (segunda ejecución del día).*
 
-**Aviso:** en esta ejecución no se pudo comprobar que la web responde (la herramienta de lectura de páginas no obtuvo permiso). No hay indicio de fallo, pero está sin comprobar.
+**Aviso:** en las dos ejecuciones de hoy no se pudo comprobar que la web responde (la herramienta de lectura de páginas no obtuvo permiso). No hay indicio de fallo, pero está sin comprobar.
 
 ## Fase actual: 1 — Problema
 
@@ -17,7 +17,7 @@
 
 ## Necesito de ti (máximo 3)
 
-1. **Decidir quién firma los mensajes** (10 min). El correo a ONG piloto ya está escrito (`borradores/correo-ong-piloto.md` y un borrador en tu Gmail con asunto "[BORRADOR 3SN]"). Solo falta la firma. Opciones: tu nombre, "equipo 3SN" con un correo propio, o un alias. Dímelo y relleno todos los borradores.
+1. **Decidir quién firma los mensajes** (10 min). El correo a ONG piloto ya está escrito (`borradores/correo-ong-piloto.md` y un borrador en tu Gmail con asunto "[BORRADOR 3SN]"). Lo mismo el correo a la Coordinadora de ONGD (`borradores/correo-congde.md`). Solo falta la firma. Opciones: tu nombre, "equipo 3SN" con un correo propio, o un alias. Dímelo y relleno todos los borradores.
 2. **Activar los códigos de piloto** (5 min). El correo promete una matriz gratis; sin códigos no se puede cumplir. En vercel.com → proyecto third-sector-network-piloto → Settings → Environment Variables → añadir `PILOT_CODES` con, por ejemplo, `PILOTO-01,PILOTO-02,PILOTO-03,PILOTO-04,PILOTO-05` → Save → Deployments → Redeploy.
 3. **Abrir la web y probar el portal con dos cuentas** (20 min). Primero abre https://third-sector-network-piloto.vercel.app y https://third-sector-network-piloto.vercel.app/portal/ y dime si cargan (hoy no pude comprobarlo). Después entra en `/portal/entrar.html` con un correo como ONG y publica un proyecto de prueba; con otro correo, como empresa, comprométete con una línea.
 
@@ -28,6 +28,7 @@
 - [ ] SEO básico: títulos, descripciones, `sitemap.xml`, `robots.txt`, etiquetas para compartir en redes.
 - [ ] El portal no actualiza los sellos de "pendiente" a "confirmado" en Bitcoin: añadir la comprobación.
 - [ ] Enlazar el Marco Lógico con el portal: de una matriz generada, crear el borrador de un proyecto con sus líneas.
+- [ ] Antes de pedir proyectos reales a ONG: explicar qué se hace con los datos del proyecto que escriben en el formulario (sale como objeción en el posicionamiento).
 - [ ] Completar `legal.html` (necesita titular, NIF, domicilio y correo: bloqueado hasta que José Carlos los dé).
 - [ ] Forma de medir visitas y uso sin cookies (proponer opción; activar requiere a José Carlos).
 
@@ -38,12 +39,12 @@
 - [ ] Bloqueado: subvenciones públicas una a una (BDNS) y ayuda oficial por actividad (info@OD). Desde la nube no hay acceso a esas webs; hace falta el ordenador de José Carlos.
 
 ### Posicionamiento y marketing
-- [ ] Documento de posicionamiento: cliente ideal, problema, promesa, por qué 3SN, objeciones. Una página.
-- [ ] Análisis de alternativas: qué usan hoy las ONG para formular y para captar empresas (plataformas de donación, consultoras, convocatorias).
+- [x] Documento de posicionamiento (14/11): `borradores/posicionamiento.md`. Es una hipótesis hasta que haya conversaciones.
+- [ ] Análisis de alternativas (empezar por Worldcoo, Fonselp y Donadoo, que salen en la búsqueda y están sin comprobar): qué usan hoy las ONG para formular y para captar empresas (plataformas de donación, consultoras, convocatorias).
 - [ ] Calendario de contenido de 4 semanas para LinkedIn (borradores).
 
 ### Campañas y captación
-- [ ] Borrador de correo a la CONGDE: presentar 3SN, pedir permiso para usar sus datos y proponer una prueba con socias.
+- [x] Borrador de correo a la CONGDE (14/11): `borradores/correo-congde.md` y borrador en Gmail. Falta firma.
 - [x] Borrador de correo a ONG piloto (14/11): `borradores/correo-ong-piloto.md`, con variante corta y recordatorio. También en Gmail como borrador. Falta firma y códigos de piloto.
 - [x] Guion de entrevista de 20 minutos (14/11): `borradores/guion-entrevista-ong.md`, con ficha de resultados y criterio para contar una conversación como "confirma el problema".
 

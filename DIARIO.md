@@ -2,6 +2,24 @@
 
 La entrada más reciente va arriba.
 
+## 14/11/2026 (tarde, segunda ejecución) — Posicionamiento y correo a la Coordinadora
+
+La ejecución llegó con el encargo de priorizar posicionamiento, guion y lista de 30 ONG. Guion y lista ya estaban hechos en la ejecución anterior; no se repitieron.
+
+**Hecho:**
+- Documento de posicionamiento de una página: `borradores/posicionamiento.md`.
+- Borrador de correo a la Coordinadora de ONGD: `borradores/correo-congde.md`. Copia como borrador en Gmail, sin destinatario.
+
+**Comprobado:**
+- Las cifras del posicionamiento (60,5 % público, 11,3 % empresas y fundaciones) salen de `datos/LEEME.md` y están recalculadas.
+- Lo que dice del producto coincide con el README de `main`.
+- Textos releídos.
+
+**Sin hacer o sin comprobar:**
+- La web sigue sin poder comprobarse por el mismo motivo (permiso de lectura no concedido). Segundo intento del día.
+- Las alternativas citadas (Worldcoo, Fonselp, Donadoo) son solo nombres de una búsqueda; el documento lo avisa.
+- El posicionamiento entero es hipótesis hasta la primera conversación.
+
 ## 14/11/2026 (tarde) — Preparar las conversaciones con ONG
 
 **Hecho** (todo para la fase 1, que hoy está en 0 de 15 conversaciones):
