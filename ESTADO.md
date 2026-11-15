@@ -25,8 +25,8 @@
 
 ### Plataforma e ingeniería
 - [ ] Cuando haya dominio: conectarlo en Vercel, cambiar las direcciones de `sitemap.xml`, `robots.txt` y las etiquetas de la portada, y añadir el dominio a las direcciones permitidas del acceso por correo en Supabase (los dos últimos pasos necesitan a José Carlos en el ordenador).
-- [ ] Revisar la portada: que explique los dos productos y lleve al portal (ahora solo hay un enlace en el pie).
-- [ ] SEO básico: títulos, descripciones, `sitemap.xml`, `robots.txt`, etiquetas para compartir en redes.
+- [x] Portada (15/11, PR #9): sección que presenta el portal, enlace desde la cabecera.
+- [x] SEO básico (15/11, PR #9): título, descripción, etiquetas para redes, `robots.txt` y `sitemap.xml`. Falta una imagen para compartir en redes.
 - [ ] El portal no actualiza los sellos de "pendiente" a "confirmado" en Bitcoin: añadir la comprobación.
 - [ ] Enlazar el Marco Lógico con el portal: de una matriz generada, crear el borrador de un proyecto con sus líneas.
 - [ ] Antes de pedir proyectos reales a ONG: explicar qué se hace con los datos del proyecto que escriben en el formulario (sale como objeción en el posicionamiento).

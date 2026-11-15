@@ -2,6 +2,13 @@
 
 La entrada más reciente va arriba.
 
+## 15/11/2026 — Sesión con José Carlos en el chat
+
+- Decisiones: firma "José Carlos" (nombre de pila); dominio propio y correo hola@dominio reenviado a su Gmail. Nombre y terminación del dominio aún por decidir.
+- Firma aplicada en `borradores/`. Los borradores de Gmail siguen con `[firma]`.
+- Portada y SEO publicados (PR #9, fusionado). Tests 23 de 23 y revisión visual en local, escritorio y móvil. La web en producción no se pudo abrir desde la nube para confirmarlo.
+- Sin hacer: compra del dominio y alta del correo (necesitan a José Carlos en el ordenador).
+
 ## 14/11/2026 (tarde, segunda ejecución) — Posicionamiento y correo a la Coordinadora
 
 La ejecución llegó con el encargo de priorizar posicionamiento, guion y lista de 30 ONG. Guion y lista ya estaban hechos en la ejecución anterior; no se repitieron.
