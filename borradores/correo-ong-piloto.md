@@ -23,7 +23,8 @@ A cambio te doy un código para generar gratis, con un proyecto vuestro, una mat
 ¿Te viene bien algún hueco esta semana o la próxima? Si hay otra persona más indicada en el equipo, te agradezco que me digas quién.
 
 Un saludo,
-[firma]
+José Carlos
+3SN · Third Sector Network
 
 ---
 
@@ -37,7 +38,8 @@ Estoy desarrollando una herramienta para ONG de cooperación y busco hablar 20 m
 
 ¿Podéis hacer llegar este mensaje a la persona adecuada? Gracias.
 
-[firma]
+José Carlos
+3SN · Third Sector Network
 
 ---
 
@@ -50,7 +52,8 @@ Hola, [nombre]:
 Retomo mi mensaje de la semana pasada por si se quedó enterrado. Siguen en pie los 20 minutos de conversación y la matriz gratis para un proyecto vuestro. Si no es buen momento, dímelo y no insisto.
 
 Un saludo,
-[firma]
+José Carlos
+3SN · Third Sector Network
 
 ---
 

@@ -1,6 +1,6 @@
 # Estado de 3SN
 
-*Actualizado: 14 de noviembre de 2026, 20:15 (segunda ejecución del día).*
+*Actualizado: 15 de noviembre de 2026 (decisiones de José Carlos en el chat).*
 
 **Aviso:** en las dos ejecuciones de hoy no se pudo comprobar que la web responde (la herramienta de lectura de páginas no obtuvo permiso). No hay indicio de fallo, pero está sin comprobar.
 
@@ -17,13 +17,14 @@
 
 ## Necesito de ti (máximo 3)
 
-1. **Decidir quién firma los mensajes** (10 min). El correo a ONG piloto ya está escrito (`borradores/correo-ong-piloto.md` y un borrador en tu Gmail con asunto "[BORRADOR 3SN]"). Lo mismo el correo a la Coordinadora de ONGD (`borradores/correo-congde.md`). Solo falta la firma. Opciones: tu nombre, "equipo 3SN" con un correo propio, o un alias. Dímelo y relleno todos los borradores.
+1. **Elegir el nombre del dominio y comprarlo** (15 min, en el ordenador). Decidir entre 3sn, thirdsectornetwork u otro nombre, con terminación .org o .com. La compra la haces tú o la confirmas tú.
 2. **Activar los códigos de piloto** (5 min). El correo promete una matriz gratis; sin códigos no se puede cumplir. En vercel.com → proyecto third-sector-network-piloto → Settings → Environment Variables → añadir `PILOT_CODES` con, por ejemplo, `PILOTO-01,PILOTO-02,PILOTO-03,PILOTO-04,PILOTO-05` → Save → Deployments → Redeploy.
 3. **Abrir la web y probar el portal con dos cuentas** (20 min). Primero abre https://third-sector-network-piloto.vercel.app y https://third-sector-network-piloto.vercel.app/portal/ y dime si cargan (hoy no pude comprobarlo). Después entra en `/portal/entrar.html` con un correo como ONG y publica un proyecto de prueba; con otro correo, como empresa, comprométete con una línea.
 
 ## Plan
 
 ### Plataforma e ingeniería
+- [ ] Cuando haya dominio: conectarlo en Vercel, cambiar las direcciones de `sitemap.xml`, `robots.txt` y las etiquetas de la portada, y añadir el dominio a las direcciones permitidas del acceso por correo en Supabase (los dos últimos pasos necesitan a José Carlos en el ordenador).
 - [ ] Revisar la portada: que explique los dos productos y lleve al portal (ahora solo hay un enlace en el pie).
 - [ ] SEO básico: títulos, descripciones, `sitemap.xml`, `robots.txt`, etiquetas para compartir en redes.
 - [ ] El portal no actualiza los sellos de "pendiente" a "confirmado" en Bitcoin: añadir la comprobación.
@@ -52,6 +53,9 @@
 - [ ] Mapa de posibles compradores o contratantes y qué pruebas pediría cada uno. Incluir cómo compra de verdad una administración (contrato, subvención, convenio), porque rara vez "compra" una plataforma.
 
 ## Decisiones tomadas
+
+- 15/11/2026: los correos los firma "José Carlos" (solo nombre de pila) seguido de "3SN · Third Sector Network". Ya aplicado en `borradores/`; falta aplicarlo en los borradores de Gmail.
+- 15/11/2026: 3SN tendrá dominio propio y un correo hola@dominio reenviado al Gmail de José Carlos, con etiqueta propia. Pendiente de comprar el dominio.
 
 - 2/11/2026: flujo de dinero por hitos; ingresos por comisión; sellado en blockchain ahora y pagos con cripto más adelante; primera versión sin dinero real.
 - 14/11/2026: foco exclusivo en tercer sector. 2SN y 1SN quedan para después.

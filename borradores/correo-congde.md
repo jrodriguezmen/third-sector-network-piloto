@@ -27,4 +27,5 @@ Con mucho gusto os comparto lo que aprenda en esas conversaciones, sin nombres, 
 Gracias por vuestro tiempo.
 
 Un saludo,
-[firma]
+José Carlos
+3SN · Third Sector Network
