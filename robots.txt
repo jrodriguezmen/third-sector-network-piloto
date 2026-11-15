@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /portal/panel.html
+Disallow: /gracias.html
+
+Sitemap: https://third-sector-network-piloto.vercel.app/sitemap.xml
