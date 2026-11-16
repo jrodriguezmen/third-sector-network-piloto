@@ -1,8 +1,8 @@
 # Estado de 3SN
 
-*Actualizado: 15 de noviembre de 2026 (decisiones de José Carlos en el chat).*
+*Actualizado: 16 de noviembre de 2026.*
 
-**Aviso:** en las dos ejecuciones de hoy no se pudo comprobar que la web responde (la herramienta de lectura de páginas no obtuvo permiso). No hay indicio de fallo, pero está sin comprobar.
+**Aviso:** la web lleva tres días sin poder comprobarse desde la nube (16/11, tercer intento: la herramienta de lectura de páginas no obtiene permiso cuando nadie está delante). No hay indicio de fallo, pero nadie la ha visto funcionar desde el despliegue del 15/11. Mismo motivo por el que no se pueden abrir las webs de las ONG.
 
 ## Fase actual: 1 — Problema
 
@@ -17,9 +17,11 @@
 
 ## Necesito de ti (máximo 3)
 
-1. **Elegir el nombre del dominio y comprarlo** (15 min, en el ordenador). Decidir entre 3sn, thirdsectornetwork u otro nombre, con terminación .org o .com. La compra la haces tú o la confirmas tú.
-2. **Activar los códigos de piloto** (5 min). El correo promete una matriz gratis; sin códigos no se puede cumplir. En vercel.com → proyecto third-sector-network-piloto → Settings → Environment Variables → añadir `PILOT_CODES` con, por ejemplo, `PILOTO-01,PILOTO-02,PILOTO-03,PILOTO-04,PILOTO-05` → Save → Deployments → Redeploy.
-3. **Abrir la web y probar el portal con dos cuentas** (20 min). Primero abre https://third-sector-network-piloto.vercel.app y https://third-sector-network-piloto.vercel.app/portal/ y dime si cargan (hoy no pude comprobarlo). Después entra en `/portal/entrar.html` con un correo como ONG y publica un proyecto de prueba; con otro correo, como empresa, comprométete con una línea.
+1. **Revisar y enviar 6 correos que ya están en tus borradores de Gmail** (15 min). Primero el de la Coordinadora (asunto "[BORRADOR 3SN] Consulta sobre el uso de los datos…": quita "[BORRADOR 3SN]" del asunto y pon el destinatario, el buzón general que figura en la web de la Coordinadora). Después los 5 de asunto "Consulta para el equipo de proyectos de…" (FAD Juventud, RESCATE, Amigos de la Tierra, AIETI y Movimiento por la Paz): ya llevan destinatario, motivo y firma. Textos y avisos en `borradores/envio-01-cinco-ong.md`. Es lo único que mueve hoy la métrica de la fase: 0 de 15 conversaciones.
+2. **Abrir la web y decirme si carga** (2 min). https://third-sector-network-piloto.vercel.app y https://third-sector-network-piloto.vercel.app/portal/ . Los correos enlazan a ella y yo no puedo verla desde la nube. Mejor antes de enviar.
+3. **Activar los códigos de piloto** (5 min). No hacen falta para enviar los correos, pero sí antes de la primera conversación. En vercel.com → proyecto third-sector-network-piloto → Settings → Environment Variables → añadir `PILOT_CODES` con, por ejemplo, `PILOTO-01,PILOTO-02,PILOTO-03,PILOTO-04,PILOTO-05` → Save → Deployments → Redeploy.
+
+Quedan en espera, sin prisa: elegir y comprar el dominio (15 min) y probar el portal con dos cuentas (20 min).
 
 ## Plan
 
@@ -35,7 +37,8 @@
 
 ### Datos
 - [x] Lista de 30 ONG objetivo para el piloto (14/11): `datos/ong_objetivo_piloto.csv` y `borradores/lista-ong-objetivo.md`. 20 con sede en Madrid.
-- [ ] Para las 5 primeras ONG de la lista: buscar en su web el buzón o formulario del área de proyectos y un motivo concreto para escribirles (sin guardar nombres de personas).
+- [x] Para las 5 primeras ONG de la lista (16/11): buzón general (directorio de la Coordinadora) y motivo concreto (países y sectores de 2024). No se pudo mirar la web de cada una; ver avisos en `borradores/envio-01-cinco-ong.md`.
+- [ ] Segundo envío: lo mismo para las ONG 6 a 10 de la lista, cuando haya respuestas del primero para ajustar el texto.
 - [ ] Lista de 30 empresas y fundaciones corporativas objetivo (memorias de sostenibilidad, convocatorias propias).
 - [ ] Bloqueado: subvenciones públicas una a una (BDNS) y ayuda oficial por actividad (info@OD). Desde la nube no hay acceso a esas webs; hace falta el ordenador de José Carlos.
 
@@ -47,6 +50,7 @@
 ### Campañas y captación
 - [x] Borrador de correo a la CONGDE (14/11): `borradores/correo-congde.md` y borrador en Gmail. Falta firma.
 - [x] Borrador de correo a ONG piloto (14/11): `borradores/correo-ong-piloto.md`, con variante corta y recordatorio. También en Gmail como borrador. Falta firma y códigos de piloto.
+- [x] Primer envío listo (16/11): 5 correos con destinatario, motivo y firma en `borradores/envio-01-cinco-ong.md` y como borradores en Gmail. Firma aplicada también a los dos borradores anteriores de Gmail.
 - [x] Guion de entrevista de 20 minutos (14/11): `borradores/guion-entrevista-ong.md`, con ficha de resultados y criterio para contar una conversación como "confirma el problema".
 
 ### Venta de la plataforma
@@ -54,7 +58,7 @@
 
 ## Decisiones tomadas
 
-- 15/11/2026: los correos los firma "José Carlos" (solo nombre de pila) seguido de "3SN · Third Sector Network". Ya aplicado en `borradores/`; falta aplicarlo en los borradores de Gmail.
+- 15/11/2026: los correos los firma "José Carlos" (solo nombre de pila) seguido de "3SN · Third Sector Network". Aplicado en `borradores/` y en Gmail (16/11).
 - 15/11/2026: 3SN tendrá dominio propio y un correo hola@dominio reenviado al Gmail de José Carlos, con etiqueta propia. Pendiente de comprar el dominio.
 
 - 2/11/2026: flujo de dinero por hitos; ingresos por comisión; sellado en blockchain ahora y pagos con cripto más adelante; primera versión sin dinero real.
@@ -69,10 +73,10 @@
 
 | Organización | Tipo | Estado | Última acción | Siguiente paso |
 |---|---|---|---|---|
-| FAD | ONGD | Sin contactar | En lista (14/11) | Enviar correo piloto cuando haya firma y códigos |
-| RESCATE | ONGD | Sin contactar | En lista (14/11) | Ídem |
-| Amigos de la Tierra | ONGD | Sin contactar | En lista (14/11) | Ídem |
-| AIETI | ONGD | Sin contactar | En lista (14/11) | Ídem |
-| Movimiento por la Paz -MPDL- | ONGD | Sin contactar | En lista (14/11) | Ídem |
+| FAD | ONGD | Sin contactar | Borrador listo en Gmail (16/11) | José Carlos lo envía; recordatorio único a los 7 días |
+| RESCATE | ONGD | Sin contactar | Borrador listo en Gmail (16/11) | José Carlos lo envía; recordatorio único a los 7 días |
+| Amigos de la Tierra | ONGD | Sin contactar | Borrador listo en Gmail (16/11) | José Carlos lo envía; recordatorio único a los 7 días |
+| AIETI | ONGD | Sin contactar | Borrador listo en Gmail (16/11) | José Carlos lo envía; recordatorio único a los 7 días |
+| Movimiento por la Paz -MPDL- | ONGD | Sin contactar | Borrador listo en Gmail (16/11) | José Carlos lo envía; recordatorio único a los 7 días |
 
 Las otras 25 están en `datos/ong_objetivo_piloto.csv`; se añaden aquí cuando se les escriba.

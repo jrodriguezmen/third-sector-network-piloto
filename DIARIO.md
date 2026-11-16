@@ -2,6 +2,23 @@
 
 La entrada más reciente va arriba.
 
+## 16/11/2026 — Primer envío a ONG, listo para salir
+
+**Hecho** (fase 1, 0 de 15 conversaciones):
+- Cinco correos personalizados para las 5 primeras ONG de la lista (FAD, RESCATE, Amigos de la Tierra, AIETI, Movimiento por la Paz): `borradores/envio-01-cinco-ong.md`. Cada uno con buzón de destino, motivo concreto y firma. Copia de los cinco como borradores en Gmail, con destinatario. Nada enviado.
+- Firma decidida el 15/11 aplicada a los dos borradores anteriores de Gmail (Coordinadora y plantilla); de paso se limpió el enlace a la web, que Gmail había deformado.
+
+**Comprobado:**
+- Los buzones salen del directorio de socias de la Coordinadora (`datos/congde_socias.json`, descargado el 2/11). Los países, sectores y número de proyectos, de `datos/proyectos_ongd_pais_unificado.csv` y `datos/ongd_proyectos_y_financiacion_2024.csv` (datos de 2024). Revisados uno a uno contra los archivos.
+- FAD: países y trabajo con jóvenes confirmados además en su Memoria 2024, leída hoy.
+- Textos releídos.
+
+**Sin hacer o sin comprobar:**
+- La web (portada, `/portal/` y `/api/portal/config`) sigue sin comprobarse: tercer día. La herramienta de lectura pide un permiso que nadie contesta en una ejecución automática. No lo intenté por otra vía.
+- Por el mismo motivo no se abrieron las webs de las ONG (salvo documentos de FAD que salieron en el buscador). No está comprobado que los buzones sigan activos ni si hay uno específico de cooperación; el correo pide que lo reenvíen a la persona adecuada.
+- No encontré la herramienta `add_repo`; el repositorio ya estaba disponible y el push funcionó.
+- No toqué código: sin poder ver la web en producción no conviene desplegar nada.
+
 ## 15/11/2026 — Sesión con José Carlos en el chat
 
 - Decisiones: firma "José Carlos" (nombre de pila); dominio propio y correo hola@dominio reenviado a su Gmail. Nombre y terminación del dominio aún por decidir.
